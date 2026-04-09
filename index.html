@@ -148,6 +148,104 @@
   .transparency-banner p { font-size: 0.9rem; color: var(--text-secondary); }
   .transparency-banner p strong { color: #fbbf24; }
 
+  /* ── TRES ETAPAS ── */
+  .stage-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .stage-card {
+    background: var(--navy);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .stage-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.4); }
+  .stage-card.before { border-top: 3px solid var(--accent-green); }
+  .stage-card.during { border-top: 3px solid #f59e0b; }
+  .stage-card.after  { border-top: 3px solid #60a5fa; }
+
+  .stage-img-wrap {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #080e1c;
+    position: relative;
+  }
+  .stage-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+  .stage-card:hover .stage-img-wrap img { transform: scale(1.04); }
+
+  .stage-tag {
+    position: absolute;
+    top: 12px; left: 12px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 6px;
+  }
+  .before .stage-tag { background: rgba(22,163,74,0.85);  color: #fff; }
+  .during .stage-tag { background: rgba(245,158,11,0.85); color: #fff; }
+  .after  .stage-tag { background: rgba(37,99,235,0.85);  color: #fff; }
+
+  .stage-body { padding: 18px 20px 22px; }
+  .stage-sub {
+    font-size: 15px;
+    color: #7a8aa8;
+    margin: 0 0 5px;
+    font-style: italic;
+  }
+  .stage-title-card {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+  }
+  .before .stage-title-card { color: #4ade80; }
+  .during .stage-title-card { color: #fbbf24; }
+  .after  .stage-title-card { color: #93c5fd; }
+
+  .stage-items {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 7px;
+  }
+  .stage-items li {
+    font-size: 15px;
+    color: #7a8aa8;
+    display: flex; align-items: flex-start; gap: 8px;
+    line-height: 1.5;
+  }
+  .stage-items li::before { content: '›'; color: var(--text-muted); flex-shrink: 0; margin-top: 1px; }
+
+  .stage-note {
+    background: linear-gradient(135deg, rgba(245,158,11,0.07) 0%, rgba(13,21,48,0.5) 100%);
+    border: 1px solid rgba(245,158,11,0.25);
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 12px 12px 0;
+    padding: 18px 22px;
+    font-size: 15px;
+    color: #7a8aa8;
+    line-height: 1.75;
+  }
+  .stage-note strong { color: var(--text-primary); }
+
+  @media (max-width: 680px) {
+    .stage-grid { grid-template-columns: 1fr; }
+    .stage-sub       { font-size: 16px; }
+    .stage-title-card { font-size: 1.1rem; }
+    .stage-items li  { font-size: 16px; }
+    .stage-note      { font-size: 16px; }
+  }
+
+  /* ── RESTO DE ESTILOS ORIGINALES ── */
   .compare-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -190,8 +288,8 @@
     padding: 5px 12px;
     border-radius: 6px;
   }
-  .before .card-tag { background: rgba(22,163,74,0.85); color: #fff; }
-  .after  .card-tag { background: rgba(37,99,235,0.85); color: #fff; }
+  .compare-card.before .card-tag { background: rgba(22,163,74,0.85); color: #fff; }
+  .compare-card.after  .card-tag { background: rgba(37,99,235,0.85); color: #fff; }
 
   .card-body { padding: 20px 24px 24px; }
   .card-body h3 {
@@ -199,8 +297,8 @@
     font-size: 1.1rem;
     margin-bottom: 12px;
   }
-  .before .card-body h3 { color: #4ade80; }
-  .after  .card-body h3 { color: #93c5fd; }
+  .compare-card.before .card-body h3 { color: #4ade80; }
+  .compare-card.after  .card-body h3 { color: #93c5fd; }
 
   .card-body ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 7px; }
   .card-body ul li {
@@ -400,52 +498,79 @@
     </div>
   </section>
 
-  <!-- EVIDENCIA -->
+  <!-- EVIDENCIA — TRES ETAPAS -->
   <section class="section">
     <div class="section-label">Evidencia Fotográfica</div>
-    <div class="section-title">Comparación objetiva: Estado anterior vs. Estado actual</div>
+    <div class="section-title">Secuencia completa: Antes · Durante · Después</div>
 
-    <div class="compare-grid">
-      <div class="compare-card before">
-        <div class="card-img-wrap">
-          <img src="https://raw.githubusercontent.com/qubitidsoluciones-star/Asamblea/refs/heads/main/1.jpeg" alt="Estado anterior de la estructura" loading="lazy">
-          <span class="card-tag">Antes</span>
+    <div class="stage-grid">
+
+      <!-- ANTES -->
+      <div class="stage-card before">
+        <div class="stage-img-wrap">
+          <img src="https://raw.githubusercontent.com/qubitidsoluciones-star/Asamblea/refs/heads/main/1.jpeg"
+               alt="Estado original de la portería" loading="lazy">
+          <span class="stage-tag">Antes</span>
         </div>
-        <div class="card-body">
-          <h3>Estado original registrado</h3>
-          <ul>
-            <li>Caseta de un solo nivel</li>
-            <li>Estructura liviana con mampostería simple</li>
-            <li>Ventanales integrados al cerramiento existente</li>
-            <li>Sin elementos estructurales elevados</li>
-            <li>Volumen acorde al diseño original del conjunto</li>
+        <div class="stage-body">
+          <p class="stage-sub">Estado original</p>
+          <h3 class="stage-title-card">Portería preexistente</h3>
+          <ul class="stage-items">
+            <li>Un solo nivel</li>
+            <li>Mampostería simple</li>
+            <li>Estructura liviana</li>
+            <li>Volumen acorde al diseño original</li>
           </ul>
         </div>
       </div>
 
-      <div class="compare-card after">
-        <div class="card-img-wrap">
-          <img src="https://raw.githubusercontent.com/qubitidsoluciones-star/Asamblea/refs/heads/main/2.jpeg" alt="Estado actual de la intervención" loading="lazy">
-          <span class="card-tag">Actualidad</span>
+      <!-- DURANTE -->
+      <div class="stage-card during">
+        <div class="stage-img-wrap">
+          <img src="https://raw.githubusercontent.com/qubitidsoluciones-star/Asamblea/refs/heads/main/3.jpeg"
+               alt="Demolición total — evidencia estructural" loading="lazy">
+          <span class="stage-tag">Durante</span>
         </div>
-        <div class="card-body">
-          <h3>Intervención con cambio estructural</h3>
-          <ul>
-            <li>Columnas en concreto reforzado visibles</li>
-            <li>Placa elevada que configura un segundo nivel</li>
-            <li>Cubierta metálica de mayor envergadura</li>
-            <li>Incremento notable en altura y volumen</li>
+        <div class="stage-body">
+          <p class="stage-sub">Demolición total</p>
+          <h3 class="stage-title-card">Evidencia estructural clave</h3>
+          <ul class="stage-items">
+            <li>Estructura anterior demolida completamente</li>
+            <li>Columnas de concreto reforzado expuestas</li>
+            <li>Placa para segundo nivel visible</li>
+            <li>Imposible catalogar como mantenimiento</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- DESPUÉS -->
+      <div class="stage-card after">
+        <div class="stage-img-wrap">
+          <img src="https://raw.githubusercontent.com/qubitidsoluciones-star/Asamblea/refs/heads/main/final.jpeg"
+               alt="Resultado final — obra nueva concluida" loading="lazy">
+          <span class="stage-tag">Después</span>
+        </div>
+        <div class="stage-body">
+          <p class="stage-sub">Obra concluida</p>
+          <h3 class="stage-title-card">Nueva edificación</h3>
+          <ul class="stage-items">
+            <li>Segundo nivel construido</li>
+            <li>Aumento de altura notable</li>
+            <li>Cambio de sistema estructural</li>
             <li>Sistema constructivo diferente al original</li>
           </ul>
         </div>
       </div>
+
     </div>
 
-    <div class="evidence-full">
-      <img src="https://raw.githubusercontent.com/qubitidsoluciones-star/Asamblea/refs/heads/main/3.jpeg" alt="Vista adicional de la intervención actual" loading="lazy">
-      <div class="evidence-caption">
-        📸 Vista complementaria — se aprecian los nuevos elementos estructurales: columnas, placa y cubierta que superan la altura y el volumen de la construcción original.
-      </div>
+    <!-- Nota probatoria -->
+    <div class="stage-note">
+      <strong>La foto del "Durante" es la pieza probatoria central.</strong>
+      Una demolición total con columnas de concreto y placa para segundo nivel no puede clasificarse
+      jurídicamente como mantenimiento locativo — ninguna norma de propiedad horizontal lo permite.
+      La secuencia completa demuestra que se trata de una <strong>obra nueva no autorizada</strong>
+      que requería licencia de construcción.
     </div>
   </section>
 
